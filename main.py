@@ -1,6 +1,6 @@
 import requests
 import json
-
+import time
 
 with open("keys.json") as f:
     ALCHEMY_KEY = json.load(f)["alchemy_key"]
@@ -26,12 +26,20 @@ class NFT:
         )
         resp = requests.get(url=url)
         data = resp.json()
-        try:
+
+        if "error" in data["openSea"].keys() and "error" in data["looksRare"].keys():
+            print(f"---cannot update floor price for {self.name}")
+        elif (
+            "error" not in data["openSea"].keys()
+            and "error" not in data["looksRare"].keys()
+        ):
             self.floor = min(
                 data["openSea"]["floorPrice"], data["looksRare"]["floorPrice"]
             )
-        except:
-            print(f"cannot update floor price for {self.name}")
+        elif "error" in data["openSea"].keys():
+            self.floor = data["looksRare"]["floorPrice"]
+        elif "error" in data["looksRare"].keys():
+            self.floor = data["openSea"]["floorPrice"]
 
     def get_value(self):
         return self.floor * self.held
@@ -59,6 +67,7 @@ def print_totals(nfts):
         )
         totals[0] += nft.held
         totals[1] += nft.get_value()
+        time.sleep(0.5)
 
     print(f"Total nfts held: {totals[0]}")
     print(f"Total value: {totals[1]}")
