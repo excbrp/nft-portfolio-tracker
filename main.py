@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+from pycoingecko import CoinGeckoAPI
 
 with open("keys.json") as f:
     ALCHEMY_KEY = json.load(f)["alchemy_key"]
@@ -9,6 +10,7 @@ if ALCHEMY_KEY == "":
     print("error: you need to set your alchemy key inside keys.json")
     exit()
 
+cg = CoinGeckoAPI()
 
 class NFT:
     def __init__(self, name, addr, held=0, floor=0):
@@ -70,7 +72,11 @@ def print_totals(nfts):
         time.sleep(0.5)
 
     print(f"Total nfts held: {totals[0]}")
-    print(f"Total value: {totals[1]}")
+    price = cg.get_price(ids='ethereum', vs_currencies='usd')
+    print(price)
+    val_usd = totals[1] * price['ethereum']['usd']
+    print(f"Total value: {totals[1]} eth, ${val_usd}")
+
 
 
 if __name__ == "__main__":
