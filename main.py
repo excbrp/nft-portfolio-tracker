@@ -73,7 +73,6 @@ def print_totals(nfts):
 
     print(f"Total nfts held: {totals[0]}")
     price = cg.get_price(ids='ethereum', vs_currencies='usd')
-    print(price)
     val_usd = totals[1] * price['ethereum']['usd']
     print(f"Total value: {totals[1]} eth, ${val_usd}")
 
