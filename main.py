@@ -69,7 +69,6 @@ def print_totals(nfts):
         )
         totals[0] += nft.held
         totals[1] += nft.get_value()
-        time.sleep(0.5)
 
     print(f"Total nfts held: {totals[0]}")
     price = cg.get_price(ids='ethereum', vs_currencies='usd')
