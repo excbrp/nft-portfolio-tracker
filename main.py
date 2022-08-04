@@ -12,6 +12,7 @@ if ALCHEMY_KEY == "":
 
 cg = CoinGeckoAPI()
 
+
 class NFT:
     def __init__(self, name, addr, held=0, floor=0):
         self.name = name
@@ -62,19 +63,27 @@ def load_nfts(fname):
 
 def print_totals(nfts):
     totals = [0, 0]
+    print(
+        "{0:20} {1:20} {2:10} {3:30}".format(
+            "Collection", "Floor", "Quantity", "Value at floor"
+        )
+    )
     for nft in nfts:
         nft.update_floor()
+
         print(
-            f"{nft.name} floor: {nft.floor}, holding: {nft.held}, value at floor: {nft.get_value()}"
+            "{0:20} {1:<20} {2:<10} {3:<30}".format(
+                nft.name, round(nft.floor, 3), nft.held, round(nft.get_value(), 3)
+            )
         )
+
         totals[0] += nft.held
         totals[1] += nft.get_value()
 
     print(f"Total nfts held: {totals[0]}")
-    price = cg.get_price(ids='ethereum', vs_currencies='usd')
-    val_usd = totals[1] * price['ethereum']['usd']
-    print(f"Total value: {totals[1]} eth, ${val_usd}")
-
+    price = cg.get_price(ids="ethereum", vs_currencies="usd")
+    val_usd = totals[1] * price["ethereum"]["usd"]
+    print(f"Total value: {round(totals[1], 3)} eth, ${round(val_usd, 2)}")
 
 
 if __name__ == "__main__":
