@@ -41,12 +41,13 @@ python main.py
 ```
 Example output:
 ```
-Azuki floor: 11.0, holding: 1, value at floor: 11.0
-Doodles floor: 13.5, holding: 1, value at floor: 13.5
-Pudgy Penguins floor: 1.448, holding: 8, value at floor: 11.584
-Milady floor: 0.899, holding: 2, value at floor: 1.798
+Collection           Floor                Quantity   Value at floor
+Azuki                7.1                  1          7.1
+Doodles              7.985                1          7.985
+Pudgy Penguins       2.79                 8          22.32
+Milady               0.483                2          0.966
 Total nfts held: 12
-Total value: 37.882000000000005
+Total value: 38.371 eth, $76181.76
 ```
 
 
